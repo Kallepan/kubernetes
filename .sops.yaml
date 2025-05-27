@@ -1,0 +1,5 @@
+creation_rules:
+  - path_regex: 'environments/*/.*\.yaml'
+    key_groups:
+      - pgp:
+          - 88476BE58FC9F11D445A357BDCD2B9436392EBD5

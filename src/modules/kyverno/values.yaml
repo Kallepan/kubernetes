@@ -1,0 +1,3 @@
+features:
+  backgroundScan:
+    backgroundScanInterval: "5s"

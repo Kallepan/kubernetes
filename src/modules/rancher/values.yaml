@@ -1,0 +1,3 @@
+hostname: rancher.local
+bootstrapPassword: "rancher"
+replicas: 1

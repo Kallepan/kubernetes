@@ -1,0 +1,4 @@
+meshID: "minikube"
+meshConfig:
+  extensionProviders: []
+  enableTracing: false

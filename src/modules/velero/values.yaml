@@ -1,0 +1,40 @@
+initContainers:
+  - name: velero-plugin-for-aws
+    image: velero/velero-plugin-for-aws:v${aws_plugin_version}
+    imagePullPolicy: IfNotPresent
+    volumeMounts:
+      - mountPath: /target
+        name: plugins
+
+image:
+  tag: v${velero_version}
+
+configuration:
+  backupStorageLocation:
+  - name: backup
+    provider: aws
+    bucket: ${bucket_name}
+    prefix: velero-backup
+    default: true
+    credential:
+      name: cloud-credentials
+      key: cloud
+    config:
+      region: eu-central-1
+      s3ForcePathStyle: "true"
+      s3Url: http://minio.minio.svc.cluster.local:9000
+      checksumAlgorithm: ""
+  volumeSnapshotLocation:
+  - name: aws
+    provider: aws
+    credential:
+      name: cloud-credentials
+      key: cloud
+    config:
+      region: eu-central-1
+      s3ForcePathStyle: "true"
+      s3Url: http://minio.minio.svc.cluster.local:9000
+deployNodeAgent: true
+defaultSnapshotMoveData: true
+defaultVolumeSnapshotLocations: "aws:velero-bucket-storage"
+features: EnableCSI
