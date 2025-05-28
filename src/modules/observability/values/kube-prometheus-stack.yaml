@@ -1,0 +1,6 @@
+kube-state-metrics:  
+  metricLabelsAllowlist: 
+  - nodes=[*]
+  - namespaces=[*]
+  - configmaps=[*]
+

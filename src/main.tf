@@ -22,4 +22,10 @@ module "cert-manager" {
 
 module "kyverno" {
   source = "./modules/kyverno"
+
+  install_report_server = false
+}
+
+module "observability" {
+  source = "./modules/observability"
 }
