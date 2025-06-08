@@ -6,8 +6,8 @@ export TF_VAR_homelab_registry_url := $(shell sops -d environments/${ENVIRONMENT
 export TF_VAR_homelab_registry_token := $(shell sops -d environments/${ENVIRONMENT}/secrets.yaml | yq .global.homelab-registry.password)
 export TF_VAR_homelab_registry_username := $(shell sops -d environments/${ENVIRONMENT}/secrets.yaml | yq .global.homelab-registry.username)
 
-export TF_VAR_ne_registry_token := $(shell sops -d environments/${ENVIRONMENT}/secrets.yaml | yq .global.ne-registry.password)
 export TF_VAR_ne_registry_url := $(shell sops -d environments/${ENVIRONMENT}/secrets.yaml | yq .global.ne-registry.url)
+export TF_VAR_ne_registry_token := $(shell sops -d environments/${ENVIRONMENT}/secrets.yaml | yq .global.ne-registry.password)
 export TF_VAR_ne_registry_username := $(shell sops -d environments/${ENVIRONMENT}/secrets.yaml | yq .global.ne-registry.username)
 
 # Default target
@@ -32,7 +32,7 @@ check-tools:
 start-minikube: check-tools
 	@if ! minikube status >/dev/null 2>&1; then \
 		echo "Starting Minikube..."; \
-		minikube start --driver=docker; \
+		minikube start --driver=docker --embed-certs; \
 	else \
 		echo "Minikube is already running."; \
 	fi
