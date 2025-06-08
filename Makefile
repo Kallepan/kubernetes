@@ -2,9 +2,13 @@
 TERRAFORM_SOURCE_DIRECTORY := src
 ENVIRONMENT := default
 
-export TF_VAR_registry_token := $(shell sops -d environments/${ENVIRONMENT}/secrets.yaml | yq .global.registry.password)
-export TF_VAR_registry_url := $(shell sops -d environments/${ENVIRONMENT}/secrets.yaml | yq .global.registry.url)
-export TF_VAR_registry_username := $(shell sops -d environments/${ENVIRONMENT}/secrets.yaml | yq .global.registry.username)
+export TF_VAR_homelab_registry_url := $(shell sops -d environments/${ENVIRONMENT}/secrets.yaml | yq .global.homelab-registry.url)
+export TF_VAR_homelab_registry_token := $(shell sops -d environments/${ENVIRONMENT}/secrets.yaml | yq .global.homelab-registry.password)
+export TF_VAR_homelab_registry_username := $(shell sops -d environments/${ENVIRONMENT}/secrets.yaml | yq .global.homelab-registry.username)
+
+export TF_VAR_ne_registry_token := $(shell sops -d environments/${ENVIRONMENT}/secrets.yaml | yq .global.ne-registry.password)
+export TF_VAR_ne_registry_url := $(shell sops -d environments/${ENVIRONMENT}/secrets.yaml | yq .global.ne-registry.url)
+export TF_VAR_ne_registry_username := $(shell sops -d environments/${ENVIRONMENT}/secrets.yaml | yq .global.ne-registry.username)
 
 # Default target
 .DEFAULT_GOAL := bootstrap

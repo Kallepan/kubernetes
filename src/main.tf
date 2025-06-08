@@ -1,14 +1,33 @@
 ### Pull secret
-resource "kubernetes_secret_v1" "registry_secret" {
+resource "kubernetes_secret_v1" "homelab_registry_secret" {
   metadata {
-    name      = "registry-secret"
+    name      = "homelab-registry-secret"
+    namespace = "default"
+  }
+
+  data = {
+    ".dockerconfigjson" = jsonencode({
+      auths = {
+        "${var.homelab_registry_url}" = {
+          auth = base64encode("${var.homelab_registry_username}:${var.homelab_registry_token}")
+        }
+      }
+    })
+  }
+  
+type = "kubernetes.io/dockerconfigjson"
+}
+
+resource "kubernetes_secret_v1" "ne_registry_secret" {
+  metadata {
+    name      = "ne-registry-secret"
     namespace = "default"
   }
   data = {
     ".dockerconfigjson" = jsonencode({
       auths = {
-        "${var.registry_url}" = {
-          auth = base64encode("${var.registry_username}:${var.registry_token}")
+        "${var.ne_registry_url}" = {
+          auth = base64encode("${var.ne_registry_username}:${var.ne_registry_token}")
         }
       }
     })
@@ -20,12 +39,12 @@ module "cert-manager" {
   source = "./modules/cert-manager"
 }
 
-module "kyverno" {
-  source = "./modules/kyverno"
-
-  install_report_server = false
-}
-
 module "observability" {
   source = "./modules/observability"
 }
+
+# module "kyverno" {
+#   source = "./modules/kyverno"
+
+#   install_report_server = false
+# }
