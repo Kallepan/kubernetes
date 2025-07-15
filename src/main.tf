@@ -35,16 +35,6 @@ resource "kubernetes_secret_v1" "ne_registry_secret" {
   type = "kubernetes.io/dockerconfigjson"
 }
 
-module "cert-manager" {
+module "cert_manager" {
   source = "./modules/cert-manager"
 }
-
-module "observability" {
-  source = "./modules/observability"
-}
-
-# module "kyverno" {
-#   source = "./modules/kyverno"
-
-#   install_report_server = false
-# }

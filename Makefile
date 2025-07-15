@@ -34,7 +34,7 @@ start-minikube: check-tools
 		echo "Starting Minikube..."; \
 		minikube start --driver=docker --embed-certs; \
 	else \
-		echo "Minikube is already running."; \
+		echo "Minikube is already running. Skipping initialization..."; \
 	fi
 
 # Initialize Terraform
@@ -43,12 +43,12 @@ terraform-init: check-tools
 	terraform -chdir=$(TERRAFORM_SOURCE_DIRECTORY) init
 
 # Apply Terraform configuration
-terraform-apply: check-tools
+terraform-apply: terraform-init
 	@echo "Applying Terraform configuration..."
 	terraform -chdir=$(TERRAFORM_SOURCE_DIRECTORY) apply -auto-approve
 
 # Bootstrap the environment
-bootstrap: start-minikube terraform-init terraform-apply
+bootstrap: start-minikube terraform-apply
 	@echo "Environment bootstrapped successfully!"
 
 # Clean up resources
