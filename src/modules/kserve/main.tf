@@ -1,4 +1,5 @@
 resource "helm_release" "kserve_crd" {
+  depends_on = [ kubernetes_namespace_v1.kserve ]
   name       = "kserve-crd"
   chart      = "kserve-crd"
   repository = "oci://ghcr.io/kserve/charts"
@@ -6,7 +7,7 @@ resource "helm_release" "kserve_crd" {
 
   version = var.kserve_version
 
-  create_namespace = true
+  create_namespace = false
   wait             = true
 }
 
@@ -27,9 +28,9 @@ resource "helm_release" "kserve" {
   ]
 }
 
-resource "kubernetes_namespace_v1" "kserve_test" {
+resource "kubernetes_namespace_v1" "kserve" {
   metadata {
-    name = "kserve-test"
+    name = "kserve"
     labels = {
       app = "kserve"
     }
