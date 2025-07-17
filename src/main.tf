@@ -38,3 +38,11 @@ resource "kubernetes_secret_v1" "ne_registry_secret" {
 module "cert_manager" {
   source = "./modules/cert-manager"
 }
+
+module "istio" {
+  source = "./modules/istio"
+}
+
+module "kserve" {
+  source = "./modules/kserve"
+}

@@ -1,0 +1,7 @@
+kserve:
+  modelmesh:
+    enabled: false
+  serverless:
+    enabled: false
+  rawdeployment:
+    enabled: true
